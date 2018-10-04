@@ -1,6 +1,8 @@
 package com.apap.tutorial4.model;
 
 import java.io.Serializable;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -41,6 +43,10 @@ public class DealerModel {
 	public void setListCar(List<CarModel> listCar) {
 		this.listCar = listCar;
 	}
+	public List<CarModel> carListSorted(){
+		Collections.sort(listCar, new PriceComparator());
+		return listCar;
+	}
 	
 	public long getId() {
 		return id;
@@ -55,4 +61,12 @@ public class DealerModel {
 	}
 
 
+}
+
+class PriceComparator implements Comparator<CarModel>{
+	@Override
+	public int compare(CarModel a, CarModel b) {
+		return a.getPrice()<b.getPrice()? -1 : a.getPrice() == b.getPrice() ? 0 :1;
+	}
+	
 }

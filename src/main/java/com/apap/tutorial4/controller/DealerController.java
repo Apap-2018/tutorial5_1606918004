@@ -51,13 +51,28 @@ public class DealerController {
 		String alamat = dealer.getAlamat();
 		String no_telp = dealer.getNoTelp();
 		Long id = dealer.getId();
+		List<CarModel> list = dealer.carListSorted();
 
 		model.addAttribute("dealerID", id);
 		model.addAttribute("alamat", alamat);
 		model.addAttribute("no_telp", no_telp);
+		model.addAttribute("list_car", list);
 		return "view-dealer";
 	}
 	
+	@RequestMapping(value = "/dealer/delete/{dealerId}", method = RequestMethod.POST)
+	private String deleteDealer(@PathVariable(value = "dealerId") Long dealerId) {
+		dealerService.deleteDealer(dealerId);
+		return "delete-dealer";
+	}
+	
+	@RequestMapping("/dealer/viewall")
+	public String viewall(Model model) {
+		List<DealerModel> archive = dealerService.getAllDealer();
+		
+		model.addAttribute("listDealer", archive);
+		return "viewall-dealer";
+	}
 	
 
 }

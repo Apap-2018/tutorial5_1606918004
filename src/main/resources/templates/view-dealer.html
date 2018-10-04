@@ -9,5 +9,15 @@
     <h3 th:text="'Telepon: ' + ${no_telp}"></h3>
     
     <a th:href="@{'/car/add/' + ${dealerID}}">Add Car</a>
+    
+    <div th:each="car : ${list}">
+			<h3 th:text="${car.id}"></h3>
+			<h3 th:text="${car.brand}"></h3>
+			<h3 th:text="${car.type}"></h3>
+			<h3 th:text="${car.price}"></h3>
+			<h3 th:text="${car.amount}"></h3>
+			<br>
+	</div>
    </body>
+   
  </html>

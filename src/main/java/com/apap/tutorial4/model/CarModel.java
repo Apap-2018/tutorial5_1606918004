@@ -98,4 +98,5 @@ public class CarModel {
 	public DealerModel getDealer() {
 		return dealer;
 	}
+	
 }

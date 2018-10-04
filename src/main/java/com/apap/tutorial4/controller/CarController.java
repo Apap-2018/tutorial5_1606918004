@@ -42,6 +42,6 @@ public class CarController {
 		return "redirect:/dealer/view?dealerId=" + Long.toString(dealerID);
 	}
 	
-
+	
 	
 }
