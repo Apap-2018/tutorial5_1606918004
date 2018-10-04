@@ -25,6 +25,34 @@ public class DealerModel {
 
 	@OneToMany(mappedBy = "dealer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<CarModel> listCar;
+	
+	public void setId(long id) {
+		this.id = id;
+	}
+	
+	public void setAlamat(String alamat) {
+		this.alamat = alamat;
+	}
+	
+	public void setNoTelp(String noTelp) {
+		this.noTelp = noTelp;
+	}
+	
+	public void setListCar(List<CarModel> listCar) {
+		this.listCar = listCar;
+	}
+	
+	public long getId() {
+		return id;
+	}
+	
+	public String getAlamat() {
+		return alamat;
+	}
+	
+	public String getNoTelp() {
+		return noTelp;
+	}
 
 
 }

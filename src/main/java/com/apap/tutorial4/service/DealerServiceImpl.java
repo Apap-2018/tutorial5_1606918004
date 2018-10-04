@@ -22,6 +22,7 @@ public class DealerServiceImpl implements DealerService {
 		// TODO Auto-generated method stub
 		return dealerDb.findById(id);
 	}
+	
 
 	@Override
 	public void addDealer(DealerModel dealer) {

@@ -42,6 +42,21 @@ public class DealerController {
 		dealerService.addDealer(dealer);
 		return "add";
 	}
+	@RequestMapping(value = "/dealer/view", method = RequestMethod.GET)
+	private String viewDealer(@RequestParam(value = "dealerId", required = true) Long dealerId,
+			Model model
+			) {
+		DealerModel dealer = dealerService.getDealerDetailById(dealerId).get();
+		
+		String alamat = dealer.getAlamat();
+		String no_telp = dealer.getNoTelp();
+		Long id = dealer.getId();
+
+		model.addAttribute("dealerID", id);
+		model.addAttribute("alamat", alamat);
+		model.addAttribute("no_telp", no_telp);
+		return "view-dealer";
+	}
 	
 	
 
