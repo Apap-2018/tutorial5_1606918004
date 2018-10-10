@@ -26,21 +26,28 @@ public class CarController {
 		CarModel car = new CarModel();
 		DealerModel dealer = dealerService.getDealerDetailById(dealerID).get();
 		car.setDealer(dealer);
-		
+		dealer.getListCar().add(car);
+		model.addAttribute("dealer", dealer);
 		model.addAttribute("car", car);
 		return "addCar";
 	}
 	
 	@RequestMapping(value = "/car/add/{dealerID}", method = RequestMethod.POST)
 	private String addCarSubmit(
-			@ModelAttribute CarModel car, 
-			@PathVariable(value = "dealerID") Long dealerID,
-			Model model
-			) {
+			@ModelAttribute CarModel car, @PathVariable(value = "dealerID") Long dealerID, Model model) {
 		carService.addCar(car);
 		model.addAttribute("dealerId", dealerID);
 		return "redirect:/dealer/view?dealerId=" + Long.toString(dealerID);
 	}
+	
+	@RequestMapping(value = "/car/delete", method = RequestMethod.POST)
+	private String delete(@ModelAttribute DealerModel dealer, Model model) {
+		for (CarModel car : dealer.getListCar()) {
+			carService.deleteCar(car.getId());
+		}
+		
+		return "delete";
+		}
 	
 	
 	

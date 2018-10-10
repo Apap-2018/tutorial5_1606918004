@@ -1,23 +1,59 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.com">
   <head>
-    <title>View By Id</title>
+    <title th:replace="fragments/fragment :: header('View by Id')"></title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+    
   </head>
   
   <body>
-    <h3 th:text="'Alamat: ' + ${alamat}"></h3>
-    <h3 th:text="'Telepon: ' + ${no_telp}"></h3>
+  <nav th:replace="fragments/fragment :: navbar"></nav>
+  	<h3 th:text="'Dealer'"></h3>
+    <h3 th:text="'Alamat: ' + ${dealer.alamat}"></h3>
+    <h3 th:text="'Telepon: ' + ${dealer.noTelp}"></h3>
+    <form th:action="@{/dealer/delete}">
+    	<input type="hidden" name="dealerId" th:value="${dealer.id}">
+    	<button type="submit">Hapus Dealer</button>
+    </form>
+    <br>
+    <form th:action="@{/car/delete}" th:object="${dealer}" method="POST">
+    	<table>
+    		<thead>
+    			<tr>
+    				<th>No.</th>
+    				<th>Brand</th>
+    				<th>Type</th>
+    				<th>Price</th>
+    				<th>Amount</th>
+    				<th>Aksi</th>
+    			</tr>
+    				
+    		</thead>
+    		<tbody>
+    			<tr th:each="car,iterationStatus : ${listCar}">
+    				<td th:text="${iterationStatus.count"></td>
+					<td th:text="${car.id}"></td>
+					<td th:text="${car.brand}"></td>
+					<td th:text="${car.type}"></td>
+					<td th:if="${car.price} >= 1000000000">Diatas 1M</td>
+					<td th:unless="${car.price} >= 1000000000">Dibawah 1M</td>
+					<td th:text="${car.amount}"></td>
+					<td>
+						<input type="checkbox" th:field="*{listCar}" th:value="car.id"/>
+						<label th:for="${#ids.prev('listCar')}">Hapus</label>
+					</td>
+				</tr>
+    		</tbody>
+    	</table>
+    	<button type="submit">Hapus yang dipilih</button>
     
-    <a th:href="@{'/car/add/' + ${dealerID}}">Add Car</a>
+    </form>
+    <br>
+    <form th:action="@{'/car/add/' + ${dealer.id}}">
+    	<button value="submit">Add Car</button>
+    </form>
     
-    <div th:each="car : ${list}">
-			<h3 th:text="${car.id}"></h3>
-			<h3 th:text="${car.brand}"></h3>
-			<h3 th:text="${car.type}"></h3>
-			<h3 th:text="${car.price}"></h3>
-			<h3 th:text="${car.amount}"></h3>
-			<br>
-	</div>
    </body>
    
  </html>

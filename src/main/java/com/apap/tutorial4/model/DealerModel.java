@@ -1,6 +1,7 @@
 package com.apap.tutorial4.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -26,7 +27,7 @@ public class DealerModel {
 	private String noTelp;
 
 	@OneToMany(mappedBy = "dealer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<CarModel> listCar;
+	private List<CarModel> listCar = new ArrayList<CarModel>();
 	
 	public void setId(long id) {
 		this.id = id;
@@ -42,6 +43,9 @@ public class DealerModel {
 	
 	public void setListCar(List<CarModel> listCar) {
 		this.listCar = listCar;
+	}
+	public List<CarModel> getListCar() {
+		return listCar;
 	}
 	public List<CarModel> carListSorted(){
 		Collections.sort(listCar, new PriceComparator());

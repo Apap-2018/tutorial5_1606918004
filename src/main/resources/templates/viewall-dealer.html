@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 	<head>
-		<title>View All</title>
+		<title th:replace="fragments/fragment :: header('View all')"></title>
+		<object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    	<object th:include="fragments/fragment :: js" th:remove="tag"></object>
+		
 	</head>
 	<body>
-		<div th:each="dealer : ${listDealer}">
+	<nav th:replace="fragments/fragment :: navbar"></nav>
+		<div th:each="dealer,iterationStatus : *{listDealer}">
 			<h3 th:text="${dealer.id}"></h3>
 			<h3 th:text="${dealer.alamat}"></h3>
 			<h3 th:text="${dealer.no_telp}"></h3>
-			<div th:each="car : ${dealer.carListSorted()}">
+			<div th:each="car, iterationStatus : *{dealer.carListSorted()}">
 				<h3 th:text="${car.brand}"></h3>
 				<h3 th:text="${car.price}"></h3>
 				<h3 th:text="${car.amount}"></h3>
