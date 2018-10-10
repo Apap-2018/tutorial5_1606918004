@@ -1,8 +1,13 @@
 package com.apap.tutorial4.controller;
 
+import java.util.ArrayList;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,7 +37,7 @@ public class CarController {
 		return "addCar";
 	}
 	
-	@RequestMapping(value = "/car/add/{dealerID}", method = RequestMethod.POST)
+	@RequestMapping(value = "/car/add/{dealerID}", method = RequestMethod.POST, params= {"save"})
 	private String addCarSubmit(
 			@ModelAttribute CarModel car, @PathVariable(value = "dealerID") Long dealerID, Model model) {
 		carService.addCar(car);
@@ -48,7 +53,23 @@ public class CarController {
 		
 		return "delete";
 		}
-	
-	
+	@RequestMapping(value="/car/add/{dealerId}", method = RequestMethod.POST, params= {"addRow"})
+	public String addRow(@ModelAttribute DealerModel dealer, BindingResult bindingResult, Model model) {
+		if (dealer.getListCar() == null) {
+            dealer.setListCar(new ArrayList<CarModel>());
+        }
+		dealer.getListCar().add(new CarModel());
+		
+		model.addAttribute("dealer", dealer);
+		return "addCar";
+	}
+	@RequestMapping(value="/car/add/{dealerId}", method = RequestMethod.POST, params={"removeRow"})
+	public String removeRow(@ModelAttribute DealerModel dealer, final BindingResult bindingResult, final HttpServletRequest req, Model model) {
+	    final Integer row = Integer.valueOf(req.getParameter("removeRow"));
+	    dealer.getListCar().remove(row.intValue());
+	    
+	    model.addAttribute("dealer", dealer);
+	    return "addCar";
+	}
 	
 }
